@@ -1,0 +1,184 @@
+{% extends 'base.html' %}
+{% block title %}{{challenge.title}}{% endblock %}
+{% load static %}
+{% block content %}
+
+
+    <!-- BREADCRUMBS
+    ================================================== -->
+    <div class="container">
+        <nav class="mb-5 mb-md-8 mt-2" aria-label="breadcrumb">
+            <ol class="breadcrumb breadcrumb-scroll">
+                <li class="breadcrumb-item">
+                    <a class="text-gray-800" href="#">
+                        Home
+                    </a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a class="text-gray-800" href="#">
+                        Challenges
+                    </a>
+                </li>
+                <li class="breadcrumb-item text-gray-800 active" aria-current="page">
+                    Title
+                </li>
+            </ol>
+        </nav>
+    </div>
+
+
+<div class="bg"></div>
+
+<p class="headingone text-center my-6 h2">Start Challenge </p>
+<p class="headingtwo text-center text-dark  h3">Learnings and Requirement</p>
+<br>
+<p class="headingtwo text-center text-dark  h3"><a href="{% url 'resources' %}" class="btn btn-primary btn-block  mw-md-300p">Resources to learn</a></p>
+<!--<p class="headingtwo text-center text-dark  h3">{{challenge.title}}</p>-->
+<br>
+<!--<a href="{% url 'resources' %}" class="btn btn-primary btn-block  mw-md-300p">Resources to learn</a>-->
+
+<br>
+<div class="card w-80 mx-12 my-5 rounded" >
+
+<!--  <img src="{% static 'assets/img/projects/Advance Entertainment web app.jpg' %}"   class="img-fluid h-50 mx-12 my-5" alt="...">-->
+<!--  <img src="{{challenge.featured_image.url}}"   class="img-fluid h-50 mx-12 my-5" alt="...">-->
+
+</div>
+<div class="row px-4 mx-10 " >
+    <div class="col-sm-5 mx-5 ">
+      <div class="card text-dark  border-0">
+        <div class="card-body " style="background-color: aliceblue; ">
+          <h5 class="card-title text-dark px-3 mb-4">What you will Learn</h5>
+          <p class="card-text px-3">Gain expertise in handling JSON data.</p>
+          <p class="card-text px-3">Master the art of routing for seamless navigation.</p>
+          <p class="card-text px-3">Learn effective state management techniques.</p>
+          <p class="card-text px-3">Implement robust search functionality.</p>
+          <p class="card-text px-3">Perfect responsive design for various devices.</p>
+
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-5">
+      <div class="card text-dark border-0 ">
+        <div class="card-body" style="background-color: aliceblue;">
+          <h5 class="card-title text-dark px-3 mb-4">Requirements</h5>
+          <p class="card-text px-3"> HTML/CSS: Structure and style your web app.</p>
+          <p class="card-text px-3"> JavaScript: Add functionality, interactivity,& DOM</p>
+          <p class="card-text px-3"> JSON: Populate app content.</p>
+          <p class="card-text px-3">  Routing Libraries: Manage navigation.</p>
+          <p class="card-text px-3">  Responsive Design Frameworks:  adaptive layouts.</p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <br>
+
+
+    <div class="card text-center mx-2 text-white" style=" background-color: #3E54A3;">
+      <div class="card border-0" style="background-color: transparent;">
+          <h5 class="card-title text-white mt-5">My Solution</h5>
+      </div>
+      <br>
+      <div class="card-body">
+        <h5 class="card-title text-white mb-4">Submit your solution here</h5>
+        <p class="card-text mb-4">Once you’ve completed this challenge, click the button below and fill in the form to submit your solution.</p>
+        <a href="{% url 'submit' %}" target="_blank" class="btn text-primary btn-success">Submit your solution</a>
+      </div>
+    </div>
+
+    <!-- COURSE
+    ================================================== -->
+    <div class="container">
+        <div class="row mb-8">
+            <div class="col-lg-8 mb-6 mb-lg-0 position-relative">
+
+            </div>
+                   <h3 class="mb-6 text-center my-5">Feedback</h3>
+                    <div class="row align-items-center mb-8">
+                        <div class="col-md-auto mb-5 mb-md-0">
+                            <div class="border rounded shadow d-flex align-items-center justify-content-center px-9 py-8">
+                                <div class="m-2 text-center">
+                                    <h1 class="display-2 mb-0 fw-medium mb-n1">4.93</h1>
+                                    <h5 class="mb-0">Challenges rating</h5>
+                                    <div class="star-rating">
+                                        <div class="rating" style="width:100%;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md">
+                            <div class="d-md-flex align-items-center my-3 my-md-4">
+                                <div class="bg-gray-200 position-relative rounded-pill flex-grow-1 me-md-5 mb-2 mb-md-0 mw-md-260p" style="height: 10px;">
+                                    <div class="bg-teal rounded-pill position-absolute top-0 left-0 bottom-0" style="width: 90%;"></div>
+                                </div>
+
+                                <div class="d-flex align-items-center">
+                                    <div class="star-rating star-rating-lg secondary me-4">
+                                        <div class="rating" style="width:90%;"></div>
+                                    </div>
+                                    <span>4132</span>
+                                </div>
+                            </div>
+
+                            <div class="d-md-flex align-items-center my-3 my-md-4">
+                                <div class="bg-gray-200 position-relative rounded-pill flex-grow-1 me-md-5 mb-2 mb-md-0 mw-md-260p" style="height: 10px;">
+                                    <div class="bg-teal rounded-pill position-absolute top-0 left-0 bottom-0" style="width: 60%;"></div>
+                                </div>
+
+                                <div class="d-flex align-items-center">
+                                    <div class="star-rating star-rating-lg secondary me-4">
+                                        <div class="rating" style="width:60%;"></div>
+                                    </div>
+                                    <span>150</span>
+                                </div>
+                            </div>
+
+                            <div class="d-md-flex align-items-center my-3 my-md-4">
+                                <div class="bg-gray-200 position-relative rounded-pill flex-grow-1 me-md-5 mb-2 mb-md-0 mw-md-260p" style="height: 10px;">
+                                    <div class="bg-teal rounded-pill position-absolute top-0 left-0 bottom-0" style="width: 50%;"></div>
+                                </div>
+
+                                <div class="d-flex align-items-center">
+                                    <div class="star-rating star-rating-lg secondary me-4">
+                                        <div class="rating" style="width:50%;"></div>
+                                    </div>
+                                    <span>50</span>
+                                </div>
+                            </div>
+
+                            <div class="d-md-flex align-items-center my-3 my-md-4">
+                                <div class="bg-gray-200 position-relative rounded-pill flex-grow-1 me-md-5 mb-2 mb-md-0 mw-md-260p" style="height: 10px;">
+                                    <div class="bg-teal rounded-pill position-absolute top-0 left-0 bottom-0" style="width: 35%;"></div>
+                                </div>
+
+                                <div class="d-flex align-items-center">
+                                    <div class="star-rating star-rating-lg secondary me-4">
+                                        <div class="rating" style="width:35%;"></div>
+                                    </div>
+                                    <span>32</span>
+                                </div>
+                            </div>
+
+                            <div class="d-md-flex align-items-center my-3 my-md-4">
+                                <div class="bg-gray-200 position-relative rounded-pill flex-grow-1 me-md-5 mb-2 mb-md-0 mw-md-260p" style="height: 10px;">
+                                    <div class="bg-teal rounded-pill position-absolute top-0 left-0 bottom-0" style="width: 15%;"></div>
+                                </div>
+
+                                <div class="d-flex align-items-center">
+                                    <div class="star-rating star-rating-lg secondary me-4">
+                                        <div class="rating" style="width:15%;"></div>
+                                    </div>
+                                    <span>1</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+{% endblock %}

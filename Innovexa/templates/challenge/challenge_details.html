@@ -1,0 +1,701 @@
+{% extends 'base.html' %}
+{% block title %}{{challenge.title}}{% endblock %}
+{% load static %}
+{% block content %}
+
+
+    <!-- BREADCRUMBS
+    ================================================== -->
+    <div class="container">
+        <nav class="mb-5 mb-md-8 mt-2" aria-label="breadcrumb">
+            <ol class="breadcrumb breadcrumb-scroll">
+                <li class="breadcrumb-item">
+                    <a class="text-gray-800" href="#">
+                        Home
+                    </a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a class="text-gray-800" href="#">
+                        Challenges
+                    </a>
+                </li>
+                <li class="breadcrumb-item text-gray-800 active" aria-current="page">
+                    {{challenge.title}}
+                </li>
+<!--                 <img class="rounded shadow-light-lg" src="{{challenge.featured_image.url}}" alt="...">-->
+                 <div class="card-zoom position-relative">
+                         <img class="rounded shadow-light-lg  m-6"  src="{{challenge.featured_image.url}}"  alt="...">
+                 </div>
+
+            </ol>
+        </nav>
+    </div>
+
+    <!-- COURSE
+    ================================================== -->
+    <div class="container">
+        <div class="row mb-8">
+            <div class="col-lg-8 mb-6 mb-lg-0 position-relative">
+                <div class="col-10">
+                 <img src="{{ challenge.featured_image }}" alt=""/>
+
+                </div>
+
+                <h1 class="me-7 me-xl-14">
+                    {{challenge.title}}
+                </h1>
+                <p class="me-xl-13 mb-5">{{challenge.description|truncatewords:18}}
+                <a href="#" class="badge badge-lg badge-rounded-circle badge-secondary font-size-base badge-float badge-float-inside top-0 text-white">
+                    <i class="far fa-heart"></i>
+                </a>
+                    <br>
+                    <br>
+                    <a href="{% url 'start_challenge' %}" class="btn btn-primary btn-block mw-md-300p">Start Challenge</a>
+
+
+                <!-- COURSE META
+                ================================================== -->
+                <div class="d-md-flex align-items-center mb-5">
+                    <div class="border rounded-circle d-inline-block mb-4 mb-md-0 me-md-6 me-lg-4 me-xl-6">
+                        <div class="p-2">
+                         <img src="{% static 'assets/img/preyu.png' %}" alt="..." class="rounded-circle" width="68" height="68">
+
+                        </div>
+                    </div>
+
+                    <div class="mb-4 mb-md-0 me-md-8 me-lg-4 me-xl-8">
+                        <h6 class="mb-0">Created by</h6>
+                        <a href="#" class="font-size-sm text-gray-800">Preyu Patil</a>
+                    </div>
+
+                    <div class="mb-4 mb-md-0 me-md-8 me-lg-4 me-xl-8">
+                        <h6 class="mb-0">Categories</h6>
+                        <a href="#" class="font-size-sm text-gray-800">{{challenge.category}}</a>
+                    </div>
+
+                    <div class="mb-4 mb-md-0 me-md-6 me-lg-4 me-xl-6">
+                        <h6 class="mb-0">Review</h6>
+                        <div class="d-lg-flex align-items-center">
+                            <div class="star-rating mb-2 mb-lg-0">
+                                <div class="rating" style="width:100%;"></div>
+                            </div>
+
+                            <div class="font-size-sm ms-lg-3">
+                                <span>9.45 (9.8k+ reviews)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- COURSE INFO TAB
+                ================================================== -->
+                <div id="Overview" class="mb-8">
+                    <ul class="nav course-tab-v1 border-bottom h4 mb-8">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#Overview" data-bs-toggle="smooth-scroll" data-bs-offset="0">Overview</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#Reviews" data-bs-toggle="smooth-scroll" data-bs-offset="0">Reviews</a>
+                        </li>
+                    </ul>
+
+                    <h3 class="">Brief Description</h3>
+                    <p class="mb-6 line-height-md">{{challenge.description|slice:"0:130"}}</p>
+                    <p class="collapse mb-6 line-height-md" id="readcollapseExample">{{challenge.description|slice:"130:4000"}}</p>
+                    <a class="text-teal read-more h6 d-inline-block mb-8" data-bs-toggle="collapse" href="#readcollapseExample" role="button" aria-expanded="false" aria-controls="readcollapseExample">
+                        <span class="d-inline-flex align-items-center more">
+                            Read More
+                            <span class="d-flex align-items-center justify-content-center bg-teal rounded-circle ms-2 p-2 w-26p">
+                                <i class="fas fa-plus font-size-10 text-white"></i>
+                            </span>
+                        </span>
+                        <span class="d-inline-flex align-items-center less">
+                            Read Less
+                            <span class="d-flex align-items-center justify-content-center bg-teal rounded-circle ms-2 p-2 w-26p">
+                                <i class="fas fa-minus font-size-10 text-white"></i>
+                            </span>
+                        </span>
+                    </a>
+
+                    <h3 class="mb-5">What you'll learn</h3>
+                    <div class="row row-cols-lg-2 mb-8">
+                        <div class="col-md">
+                            <ul class="list-style-v1 list-unstyled">
+                                {% for learn in challenge.what_you_learn_set.all|slice:"0:5" %}
+                                <li>{{learn.points}}</li>
+                                {% endfor %}
+                        </div>
+
+                        <div class="col-md">
+                            <ul class="list-style-v1 list-unstyled ms-xl-6">
+                                {% for learn in challenge.what_you_learn_set.all|slice:"5:12" %}
+                                <li>{{learn.points}}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+
+                    <h3 class="mb-5">Requirements</h3>
+                    <ul class="list-style-v2 list-unstyled">
+                        {% for requirement in challenge.requirement_set.all %}
+                        <li>{{requirement.points}}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <div id="Curriculum" class="mb-8">
+                    <ul class="nav course-tab-v1 border-bottom h4 mb-8">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#Overview" data-bs-toggle="smooth-scroll" data-bs-offset="0">Overview</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#Reviews" data-bs-toggle="smooth-scroll" data-bs-offset="0">Reviews</a>
+                        </li>
+                    </ul>
+<!--/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+
+<!--/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+                    <h3 class="mb-6">Feedback</h3>
+                    <div class="row align-items-center mb-8">
+                        <div class="col-md-auto mb-5 mb-md-0">
+                            <div class="border rounded shadow d-flex align-items-center justify-content-center px-9 py-8">
+                                <div class="m-2 text-center">
+                                    <h1 class="display-2 mb-0 fw-medium mb-n1">4.93</h1>
+                                    <h5 class="mb-0">Challenges rating</h5>
+                                    <div class="star-rating">
+                                        <div class="rating" style="width:100%;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md">
+                            <div class="d-md-flex align-items-center my-3 my-md-4">
+                                <div class="bg-gray-200 position-relative rounded-pill flex-grow-1 me-md-5 mb-2 mb-md-0 mw-md-260p" style="height: 10px;">
+                                    <div class="bg-teal rounded-pill position-absolute top-0 left-0 bottom-0" style="width: 90%;"></div>
+                                </div>
+
+                                <div class="d-flex align-items-center">
+                                    <div class="star-rating star-rating-lg secondary me-4">
+                                        <div class="rating" style="width:90%;"></div>
+                                    </div>
+                                    <span>4132</span>
+                                </div>
+                            </div>
+
+                            <div class="d-md-flex align-items-center my-3 my-md-4">
+                                <div class="bg-gray-200 position-relative rounded-pill flex-grow-1 me-md-5 mb-2 mb-md-0 mw-md-260p" style="height: 10px;">
+                                    <div class="bg-teal rounded-pill position-absolute top-0 left-0 bottom-0" style="width: 60%;"></div>
+                                </div>
+
+                                <div class="d-flex align-items-center">
+                                    <div class="star-rating star-rating-lg secondary me-4">
+                                        <div class="rating" style="width:60%;"></div>
+                                    </div>
+                                    <span>150</span>
+                                </div>
+                            </div>
+
+                            <div class="d-md-flex align-items-center my-3 my-md-4">
+                                <div class="bg-gray-200 position-relative rounded-pill flex-grow-1 me-md-5 mb-2 mb-md-0 mw-md-260p" style="height: 10px;">
+                                    <div class="bg-teal rounded-pill position-absolute top-0 left-0 bottom-0" style="width: 50%;"></div>
+                                </div>
+
+                                <div class="d-flex align-items-center">
+                                    <div class="star-rating star-rating-lg secondary me-4">
+                                        <div class="rating" style="width:50%;"></div>
+                                    </div>
+                                    <span>50</span>
+                                </div>
+                            </div>
+
+                            <div class="d-md-flex align-items-center my-3 my-md-4">
+                                <div class="bg-gray-200 position-relative rounded-pill flex-grow-1 me-md-5 mb-2 mb-md-0 mw-md-260p" style="height: 10px;">
+                                    <div class="bg-teal rounded-pill position-absolute top-0 left-0 bottom-0" style="width: 35%;"></div>
+                                </div>
+
+                                <div class="d-flex align-items-center">
+                                    <div class="star-rating star-rating-lg secondary me-4">
+                                        <div class="rating" style="width:35%;"></div>
+                                    </div>
+                                    <span>32</span>
+                                </div>
+                            </div>
+
+                            <div class="d-md-flex align-items-center my-3 my-md-4">
+                                <div class="bg-gray-200 position-relative rounded-pill flex-grow-1 me-md-5 mb-2 mb-md-0 mw-md-260p" style="height: 10px;">
+                                    <div class="bg-teal rounded-pill position-absolute top-0 left-0 bottom-0" style="width: 15%;"></div>
+                                </div>
+
+                                <div class="d-flex align-items-center">
+                                    <div class="star-rating star-rating-lg secondary me-4">
+                                        <div class="rating" style="width:15%;"></div>
+                                    </div>
+                                    <span>1</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <ul class="list-unstyled pt-2">
+                        <li class="media d-flex">
+                            <div class="avatar avatar-xxl me-3 me-md-6 flex-shrink-0">
+                                <img src="{% static 'assets/img/avatars/avatar-1.jpg' %}" alt="..." class="avatar-img rounded-circle">
+                            </div>
+                            <div class="media-body flex-grow-1">
+                                <div class="d-md-flex align-items-center mb-5">
+                                    <div class="me-auto mb-4 mb-md-0">
+                                        <h5 class="mb-0">Oscar Cafeo</h5>
+                                        <p class="font-size-sm font-italic">Beautiful Projects</p>
+                                    </div>
+                                    <div class="star-rating">
+                                        <div class="rating" style="width:100%;"></div>
+                                    </div>
+                                </div>
+                                <p class="mb-6 line-height-md">This challenges was well organized and covered a lot more details than any other Figma courses. I really enjoy it. One suggestion is that it can be much better if we could complete the prototype together. Since we created 24 frames, I really want to test it on Figma mirror to see all the connections. Could you please let me take a look at the complete prototype?</p>
+                            </div>
+                        </li>
+                        <li class="media d-flex">
+                            <div class="avatar avatar-xxl me-3 me-md-6 flex-shrink-0">
+                                <img src="{% static 'assets/img/avatars/avatar-2.jpg' %}" alt="..." class="avatar-img rounded-circle">
+                            </div>
+                            <div class="media-body flex-grow-1">
+                                <div class="d-md-flex align-items-center mb-5">
+                                    <div class="me-auto mb-4 mb-md-0">
+                                        <h5 class="mb-0">Alex Morgan</h5>
+                                        <p class="font-size-sm font-italic">Beautiful Projects</p>
+                                    </div>
+                                    <div class="star-rating">
+                                        <div class="rating" style="width:100%;"></div>
+                                    </div>
+                                </div>
+                                <p class="mb-6 line-height-md">This course was well organized and covered a lot more details than any other Figma courses. I really enjoy it. One suggestion is that it can be much better if we could complete the prototype together. Since we created 24 frames, I really want to test it on Figma mirror to see all the connections. Could you please let me take a look at the complete prototype?</p>
+                            </div>
+                        </li>
+                    </ul>
+
+                    <div class="border shadow rounded p-6 p-md-9">
+                        <h3 class="mb-2">Add Reviews & Rate</h3>
+                        <div class="">What is it like to Innovexa?</div>
+                        <form>
+                            <div class="clearfix">
+                                <fieldset class="slect-rating mb-3">
+                                    <input type="radio" id="star5" name="rating" value="5" />
+                                    <label class = "full" for="star5" title="Awesome - 5 stars"></label>
+
+                                    <input type="radio" id="star4half" name="rating" value="4 and a half" />
+                                    <label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
+
+                                    <input type="radio" id="star4" name="rating" value="4" />
+                                    <label class = "full" for="star4" title="Pretty good - 4 stars"></label>
+
+                                    <input type="radio" id="star3half" name="rating" value="3 and a half" />
+                                    <label class="half" for="star3half" title="Meh - 3.5 stars"></label>
+
+                                    <input type="radio" id="star3" name="rating" value="3" />
+                                    <label class = "full" for="star3" title="Meh - 3 stars"></label>
+
+                                    <input type="radio" id="star2half" name="rating" value="2 and a half" />
+                                    <label class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>
+
+                                    <input type="radio" id="star2" name="rating" value="2" />
+                                    <label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
+
+                                    <input type="radio" id="star1half" name="rating" value="1 and a half" />
+                                    <label class="half" for="star1half" title="Meh - 1.5 stars"></label>
+
+                                    <input type="radio" id="star1" name="rating" value="1" />
+                                    <label class = "full" for="star1" title="Sucks big time - 1 star"></label>
+
+                                    <input type="radio" id="starhalf" name="rating" value="half" />
+                                    <label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
+                                </fieldset>
+                            </div>
+
+                            <div class="form-group mb-6">
+                                <label for="exampleInputTitle1">Review Title</label>
+                                <input type="text" class="form-control placeholder-1" id="exampleInputTitle1" placeholder="Courses">
+                            </div>
+
+                            <div class="form-group mb-6">
+                                <label for="exampleFormControlTextarea1">Review Content</label>
+                                <textarea class="form-control placeholder-1" id="exampleFormControlTextarea1" rows="6" placeholder="Content"></textarea>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-block mw-md-300p">SUBMIT REVIEW</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+<!--        <div class="text-center mb-5 mb-md-8">-->
+<!--            <h1>Similar Challenges</h1>-->
+<!--            <p class="font-size-lg text-capitalize">Discover your perfect project in our challenges.</p>-->
+<!--        </div>-->
+
+<!--        <div class="mx-n4 mb-12" data-flickity='{"pageDots": true, "prevNextButtons": false, "cellAlign": "left", "wrapAround": true, "imagesLoaded": true}'>-->
+<!--            <div class="col-md-6 col-lg-4 col-xl-3 pb-4 pb-md-5" style="padding-right:15px;padding-left:15px;">-->
+<!--                &lt;!&ndash; Card &ndash;&gt;-->
+<!--                <div class="card border shadow-dark-hover p-2 sk-fade">-->
+<!--                    &lt;!&ndash; Image &ndash;&gt;-->
+<!--                    <div class="card-zoom position-relative">-->
+<!--                        <a href="course-single-v5.html" class="card-img sk-thumbnail img-ratio-3 d-block">-->
+<!--                            <img class="rounded shadow-light-lg" src="assets/img/products/product-15.jpg" alt="...">-->
+<!--                        </a>-->
+
+<!--                        <span class="sk-fade-right badge-float bottom-0 right-0 mb-2 me-2">-->
+<!--                            <ins class="h5 mb-0 text-white">$415.99</ins>-->
+<!--                        </span>-->
+<!--                    </div>-->
+
+<!--                    &lt;!&ndash; Footer &ndash;&gt;-->
+<!--                    <div class="card-footer px-2 pb-2 mb-1 pt-4 position-relative">-->
+<!--                        &lt;!&ndash; Preheading &ndash;&gt;-->
+<!--                        <a href="course-single-v5.html"><span class="mb-1 d-inline-block text-gray-800">Photography</span></a>-->
+
+<!--                        &lt;!&ndash; Heading &ndash;&gt;-->
+<!--                        <div class="position-relative">-->
+<!--                            <a href="course-single-v5.html" class="d-block stretched-link"><h5 class="line-clamp-2 h-md-48 h-lg-58 me-md-8 me-lg-10 me-xl-4 mb-2">Fashion Photography From Professional</h5></a>-->
+
+<!--                            <div class="row mx-n2 align-items-end">-->
+<!--                                <div class="col px-2">-->
+<!--                                    <ul class="nav mx-n3">-->
+<!--                                        <li class="nav-item px-3">-->
+<!--                                            <div class="d-flex align-items-center">-->
+<!--                                                <div class="me-2 d-flex icon-uxs text-secondary">-->
+<!--                                                    &lt;!&ndash; Icon &ndash;&gt;-->
+<!--                                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">-->
+<!--                                                        <path d="M17.1947 7.06802L14.6315 7.9985C14.2476 7.31186 13.712 6.71921 13.0544 6.25992C12.8525 6.11877 12.6421 5.99365 12.4252 5.88303C13.0586 5.25955 13.452 4.39255 13.452 3.43521C13.452 1.54098 11.9124 -1.90735e-06 10.0197 -1.90735e-06C8.12714 -1.90735e-06 6.58738 1.54098 6.58738 3.43521C6.58738 4.39255 6.98075 5.25955 7.61414 5.88303C7.39731 5.99365 7.1869 6.11877 6.98502 6.25992C6.32752 6.71921 5.79178 7.31186 5.40787 7.9985L2.8447 7.06802C2.33612 6.88339 1.79688 7.26044 1.79688 7.80243V16.5178C1.79688 16.8465 2.00256 17.14 2.31155 17.2522L9.75312 19.9536C9.93073 20.018 10.1227 20.0128 10.2863 19.9536L17.7278 17.2522C18.0368 17.14 18.2425 16.8465 18.2425 16.5178V7.80243C18.2425 7.26135 17.704 6.88309 17.1947 7.06802ZM10.0197 1.5625C11.0507 1.5625 11.8895 2.40265 11.8895 3.43521C11.8895 4.46777 11.0507 5.30792 10.0197 5.30792C8.98866 5.30792 8.14988 4.46777 8.14988 3.43521C8.14988 2.40265 8.98866 1.5625 10.0197 1.5625ZM9.23844 18.1044L3.35938 15.9703V8.91724L9.23844 11.0513V18.1044ZM10.0197 9.67255L6.90644 8.54248C7.58164 7.51892 8.75184 6.87042 10.0197 6.87042C11.2875 6.87042 12.4577 7.51892 13.1329 8.54248L10.0197 9.67255ZM16.68 15.9703L10.8009 18.1044V11.0513L16.68 8.91724V15.9703Z" fill="currentColor"/>-->
+<!--                                                    </svg>-->
+
+<!--                                                </div>-->
+<!--                                                <div class="font-size-sm">5 lessons</div>-->
+<!--                                            </div>-->
+<!--                                        </li>-->
+<!--                                    </ul>-->
+<!--                                </div>-->
+
+<!--                                <div class="col-auto px-2 text-right">-->
+<!--                                    <div class="star-rating mb-2 mb-lg-0">-->
+<!--                                        <div class="rating" style="width:100%;"></div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="col-md-6 col-lg-4 col-xl-3 pb-4 pb-md-5" style="padding-right:15px;padding-left:15px;">-->
+<!--                &lt;!&ndash; Card &ndash;&gt;-->
+<!--                <div class="card border shadow-dark-hover p-2 sk-fade">-->
+<!--                    &lt;!&ndash; Image &ndash;&gt;-->
+<!--                    <div class="card-zoom position-relative">-->
+<!--                        <a href="course-single-v5.html" class="card-img sk-thumbnail img-ratio-3 d-block">-->
+<!--                            <img class="rounded shadow-light-lg" src="assets/img/products/product-14.jpg" alt="...">-->
+<!--                        </a>-->
+
+<!--                        <span class="sk-fade-right badge-float bottom-0 right-0 mb-2 me-2">-->
+<!--                            <ins class="h5 mb-0 text-white">$415.99</ins>-->
+<!--                        </span>-->
+<!--                    </div>-->
+
+<!--                    &lt;!&ndash; Footer &ndash;&gt;-->
+<!--                    <div class="card-footer px-2 pb-2 mb-1 pt-4 position-relative">-->
+<!--                        &lt;!&ndash; Preheading &ndash;&gt;-->
+<!--                        <a href="course-single-v5.html"><span class="mb-1 d-inline-block text-gray-800">Marketing</span></a>-->
+
+<!--                        &lt;!&ndash; Heading &ndash;&gt;-->
+<!--                        <div class="position-relative">-->
+<!--                            <a href="course-single-v5.html" class="d-block stretched-link"><h5 class="line-clamp-2 h-md-48 h-lg-58 me-md-8 me-lg-10 me-xl-4 mb-2">Productivity and Time Management for workplace</h5></a>-->
+
+<!--                            <div class="row mx-n2 align-items-end">-->
+<!--                                <div class="col px-2">-->
+<!--                                    <ul class="nav mx-n3">-->
+<!--                                        <li class="nav-item px-3">-->
+<!--                                            <div class="d-flex align-items-center">-->
+<!--                                                <div class="me-2 d-flex icon-uxs text-secondary">-->
+<!--                                                    &lt;!&ndash; Icon &ndash;&gt;-->
+<!--                                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">-->
+<!--                                                        <path d="M17.1947 7.06802L14.6315 7.9985C14.2476 7.31186 13.712 6.71921 13.0544 6.25992C12.8525 6.11877 12.6421 5.99365 12.4252 5.88303C13.0586 5.25955 13.452 4.39255 13.452 3.43521C13.452 1.54098 11.9124 -1.90735e-06 10.0197 -1.90735e-06C8.12714 -1.90735e-06 6.58738 1.54098 6.58738 3.43521C6.58738 4.39255 6.98075 5.25955 7.61414 5.88303C7.39731 5.99365 7.1869 6.11877 6.98502 6.25992C6.32752 6.71921 5.79178 7.31186 5.40787 7.9985L2.8447 7.06802C2.33612 6.88339 1.79688 7.26044 1.79688 7.80243V16.5178C1.79688 16.8465 2.00256 17.14 2.31155 17.2522L9.75312 19.9536C9.93073 20.018 10.1227 20.0128 10.2863 19.9536L17.7278 17.2522C18.0368 17.14 18.2425 16.8465 18.2425 16.5178V7.80243C18.2425 7.26135 17.704 6.88309 17.1947 7.06802ZM10.0197 1.5625C11.0507 1.5625 11.8895 2.40265 11.8895 3.43521C11.8895 4.46777 11.0507 5.30792 10.0197 5.30792C8.98866 5.30792 8.14988 4.46777 8.14988 3.43521C8.14988 2.40265 8.98866 1.5625 10.0197 1.5625ZM9.23844 18.1044L3.35938 15.9703V8.91724L9.23844 11.0513V18.1044ZM10.0197 9.67255L6.90644 8.54248C7.58164 7.51892 8.75184 6.87042 10.0197 6.87042C11.2875 6.87042 12.4577 7.51892 13.1329 8.54248L10.0197 9.67255ZM16.68 15.9703L10.8009 18.1044V11.0513L16.68 8.91724V15.9703Z" fill="currentColor"/>-->
+<!--                                                    </svg>-->
+
+<!--                                                </div>-->
+<!--                                                <div class="font-size-sm">5 lessons</div>-->
+<!--                                            </div>-->
+<!--                                        </li>-->
+<!--                                    </ul>-->
+<!--                                </div>-->
+
+<!--                                <div class="col-auto px-2 text-right">-->
+<!--                                    <div class="star-rating mb-2 mb-lg-0">-->
+<!--                                        <div class="rating" style="width:100%;"></div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="col-md-6 col-lg-4 col-xl-3 pb-4 pb-md-5" style="padding-right:15px;padding-left:15px;">-->
+<!--                &lt;!&ndash; Card &ndash;&gt;-->
+<!--                <div class="card border shadow-dark-hover p-2 sk-fade">-->
+<!--                    &lt;!&ndash; Image &ndash;&gt;-->
+<!--                    <div class="card-zoom position-relative">-->
+<!--                        <a href="course-single-v5.html" class="card-img sk-thumbnail img-ratio-3 d-block">-->
+<!--                            <img class="rounded shadow-light-lg" src="assets/img/products/product-16.jpg" alt="...">-->
+<!--                        </a>-->
+
+<!--                        <span class="sk-fade-right badge-float bottom-0 right-0 mb-2 me-2">-->
+<!--                            <ins class="h5 mb-0 text-white">$415.99</ins>-->
+<!--                        </span>-->
+<!--                    </div>-->
+
+<!--                    &lt;!&ndash; Footer &ndash;&gt;-->
+<!--                    <div class="card-footer px-2 pb-2 mb-1 pt-4 position-relative">-->
+<!--                        &lt;!&ndash; Preheading &ndash;&gt;-->
+<!--                        <a href="course-single-v5.html"><span class="mb-1 d-inline-block text-gray-800">Personal Development</span></a>-->
+
+<!--                        &lt;!&ndash; Heading &ndash;&gt;-->
+<!--                        <div class="position-relative">-->
+<!--                            <a href="course-single-v5.html" class="d-block stretched-link"><h5 class="line-clamp-2 h-md-48 h-lg-58 me-md-8 me-lg-10 me-xl-4 mb-2">Learn Ethical Hacking From Scratch</h5></a>-->
+
+<!--                            <div class="row mx-n2 align-items-end">-->
+<!--                                <div class="col px-2">-->
+<!--                                    <ul class="nav mx-n3">-->
+<!--                                        <li class="nav-item px-3">-->
+<!--                                            <div class="d-flex align-items-center">-->
+<!--                                                <div class="me-2 d-flex icon-uxs text-secondary">-->
+<!--                                                    &lt;!&ndash; Icon &ndash;&gt;-->
+<!--                                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">-->
+<!--                                                        <path d="M17.1947 7.06802L14.6315 7.9985C14.2476 7.31186 13.712 6.71921 13.0544 6.25992C12.8525 6.11877 12.6421 5.99365 12.4252 5.88303C13.0586 5.25955 13.452 4.39255 13.452 3.43521C13.452 1.54098 11.9124 -1.90735e-06 10.0197 -1.90735e-06C8.12714 -1.90735e-06 6.58738 1.54098 6.58738 3.43521C6.58738 4.39255 6.98075 5.25955 7.61414 5.88303C7.39731 5.99365 7.1869 6.11877 6.98502 6.25992C6.32752 6.71921 5.79178 7.31186 5.40787 7.9985L2.8447 7.06802C2.33612 6.88339 1.79688 7.26044 1.79688 7.80243V16.5178C1.79688 16.8465 2.00256 17.14 2.31155 17.2522L9.75312 19.9536C9.93073 20.018 10.1227 20.0128 10.2863 19.9536L17.7278 17.2522C18.0368 17.14 18.2425 16.8465 18.2425 16.5178V7.80243C18.2425 7.26135 17.704 6.88309 17.1947 7.06802ZM10.0197 1.5625C11.0507 1.5625 11.8895 2.40265 11.8895 3.43521C11.8895 4.46777 11.0507 5.30792 10.0197 5.30792C8.98866 5.30792 8.14988 4.46777 8.14988 3.43521C8.14988 2.40265 8.98866 1.5625 10.0197 1.5625ZM9.23844 18.1044L3.35938 15.9703V8.91724L9.23844 11.0513V18.1044ZM10.0197 9.67255L6.90644 8.54248C7.58164 7.51892 8.75184 6.87042 10.0197 6.87042C11.2875 6.87042 12.4577 7.51892 13.1329 8.54248L10.0197 9.67255ZM16.68 15.9703L10.8009 18.1044V11.0513L16.68 8.91724V15.9703Z" fill="currentColor"/>-->
+<!--                                                    </svg>-->
+
+<!--                                                </div>-->
+<!--                                                <div class="font-size-sm">5 lessons</div>-->
+<!--                                            </div>-->
+<!--                                        </li>-->
+<!--                                    </ul>-->
+<!--                                </div>-->
+
+<!--                                <div class="col-auto px-2 text-right">-->
+<!--                                    <div class="star-rating mb-2 mb-lg-0">-->
+<!--                                        <div class="rating" style="width:100%;"></div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="col-md-6 col-lg-4 col-xl-3 pb-4 pb-md-5" style="padding-right:15px;padding-left:15px;">-->
+<!--                &lt;!&ndash; Card &ndash;&gt;-->
+<!--                <div class="card border shadow-dark-hover p-2 sk-fade">-->
+<!--                    &lt;!&ndash; Image &ndash;&gt;-->
+<!--                    <div class="card-zoom position-relative">-->
+<!--                        <a href="course-single-v5.html" class="card-img sk-thumbnail img-ratio-3 d-block">-->
+<!--                            <img class="rounded shadow-light-lg" src="assets/img/products/product-12.jpg" alt="...">-->
+<!--                        </a>-->
+
+<!--                        <span class="sk-fade-right badge-float bottom-0 right-0 mb-2 me-2">-->
+<!--                            <ins class="h5 mb-0 text-white">$415.99</ins>-->
+<!--                        </span>-->
+<!--                    </div>-->
+
+<!--                    &lt;!&ndash; Footer &ndash;&gt;-->
+<!--                    <div class="card-footer px-2 pb-2 mb-1 pt-4 position-relative">-->
+<!--                        &lt;!&ndash; Preheading &ndash;&gt;-->
+<!--                        <a href="course-single-v5.html"><span class="mb-1 d-inline-block text-gray-800">Development</span></a>-->
+
+<!--                        &lt;!&ndash; Heading &ndash;&gt;-->
+<!--                        <div class="position-relative">-->
+<!--                            <a href="course-single-v5.html" class="d-block stretched-link"><h5 class="line-clamp-2 h-md-48 h-lg-58 me-md-8 me-lg-10 me-xl-4 mb-2">The Complete JavaScript Course 2020: Real Projects!</h5></a>-->
+
+<!--                            <div class="row mx-n2 align-items-end">-->
+<!--                                <div class="col px-2">-->
+<!--                                    <ul class="nav mx-n3">-->
+<!--                                        <li class="nav-item px-3">-->
+<!--                                            <div class="d-flex align-items-center">-->
+<!--                                                <div class="me-2 d-flex icon-uxs text-secondary">-->
+<!--                                                    &lt;!&ndash; Icon &ndash;&gt;-->
+<!--                                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">-->
+<!--                                                        <path d="M17.1947 7.06802L14.6315 7.9985C14.2476 7.31186 13.712 6.71921 13.0544 6.25992C12.8525 6.11877 12.6421 5.99365 12.4252 5.88303C13.0586 5.25955 13.452 4.39255 13.452 3.43521C13.452 1.54098 11.9124 -1.90735e-06 10.0197 -1.90735e-06C8.12714 -1.90735e-06 6.58738 1.54098 6.58738 3.43521C6.58738 4.39255 6.98075 5.25955 7.61414 5.88303C7.39731 5.99365 7.1869 6.11877 6.98502 6.25992C6.32752 6.71921 5.79178 7.31186 5.40787 7.9985L2.8447 7.06802C2.33612 6.88339 1.79688 7.26044 1.79688 7.80243V16.5178C1.79688 16.8465 2.00256 17.14 2.31155 17.2522L9.75312 19.9536C9.93073 20.018 10.1227 20.0128 10.2863 19.9536L17.7278 17.2522C18.0368 17.14 18.2425 16.8465 18.2425 16.5178V7.80243C18.2425 7.26135 17.704 6.88309 17.1947 7.06802ZM10.0197 1.5625C11.0507 1.5625 11.8895 2.40265 11.8895 3.43521C11.8895 4.46777 11.0507 5.30792 10.0197 5.30792C8.98866 5.30792 8.14988 4.46777 8.14988 3.43521C8.14988 2.40265 8.98866 1.5625 10.0197 1.5625ZM9.23844 18.1044L3.35938 15.9703V8.91724L9.23844 11.0513V18.1044ZM10.0197 9.67255L6.90644 8.54248C7.58164 7.51892 8.75184 6.87042 10.0197 6.87042C11.2875 6.87042 12.4577 7.51892 13.1329 8.54248L10.0197 9.67255ZM16.68 15.9703L10.8009 18.1044V11.0513L16.68 8.91724V15.9703Z" fill="currentColor"/>-->
+<!--                                                    </svg>-->
+
+<!--                                                </div>-->
+<!--                                                <div class="font-size-sm">5 lessons</div>-->
+<!--                                            </div>-->
+<!--                                        </li>-->
+<!--                                    </ul>-->
+<!--                                </div>-->
+
+<!--                                <div class="col-auto px-2 text-right">-->
+<!--                                    <div class="star-rating mb-2 mb-lg-0">-->
+<!--                                        <div class="rating" style="width:100%;"></div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="col-md-6 col-lg-4 col-xl-3 pb-4 pb-md-5" style="padding-right:15px;padding-left:15px;">-->
+<!--                &lt;!&ndash; Card &ndash;&gt;-->
+<!--                <div class="card border shadow-dark-hover p-2 sk-fade">-->
+<!--                    &lt;!&ndash; Image &ndash;&gt;-->
+<!--                    <div class="card-zoom position-relative">-->
+<!--                        <a href="course-single-v5.html" class="card-img sk-thumbnail img-ratio-3 d-block">-->
+<!--                            <img class="rounded shadow-light-lg" src="assets/img/products/product-13.jpg" alt="...">-->
+<!--                        </a>-->
+
+<!--                        <span class="sk-fade-right badge-float bottom-0 right-0 mb-2 me-2">-->
+<!--                            <ins class="h5 mb-0 text-white">$415.99</ins>-->
+<!--                        </span>-->
+<!--                    </div>-->
+
+<!--                    &lt;!&ndash; Footer &ndash;&gt;-->
+<!--                    <div class="card-footer px-2 pb-2 mb-1 pt-4 position-relative">-->
+<!--                        &lt;!&ndash; Preheading &ndash;&gt;-->
+<!--                        <a href="course-single-v5.html"><span class="mb-1 d-inline-block text-gray-800">Marketing</span></a>-->
+
+<!--                        &lt;!&ndash; Heading &ndash;&gt;-->
+<!--                        <div class="position-relative">-->
+<!--                            <a href="course-single-v5.html" class="d-block stretched-link"><h5 class="line-clamp-2 h-md-48 h-lg-58 me-md-8 me-lg-10 me-xl-4 mb-2">Learn Ethical Hacking From Scratch</h5></a>-->
+
+<!--                            <div class="row mx-n2 align-items-end">-->
+<!--                                <div class="col px-2">-->
+<!--                                    <ul class="nav mx-n3">-->
+<!--                                        <li class="nav-item px-3">-->
+<!--                                            <div class="d-flex align-items-center">-->
+<!--                                                <div class="me-2 d-flex icon-uxs text-secondary">-->
+<!--                                                    &lt;!&ndash; Icon &ndash;&gt;-->
+<!--                                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">-->
+<!--                                                        <path d="M17.1947 7.06802L14.6315 7.9985C14.2476 7.31186 13.712 6.71921 13.0544 6.25992C12.8525 6.11877 12.6421 5.99365 12.4252 5.88303C13.0586 5.25955 13.452 4.39255 13.452 3.43521C13.452 1.54098 11.9124 -1.90735e-06 10.0197 -1.90735e-06C8.12714 -1.90735e-06 6.58738 1.54098 6.58738 3.43521C6.58738 4.39255 6.98075 5.25955 7.61414 5.88303C7.39731 5.99365 7.1869 6.11877 6.98502 6.25992C6.32752 6.71921 5.79178 7.31186 5.40787 7.9985L2.8447 7.06802C2.33612 6.88339 1.79688 7.26044 1.79688 7.80243V16.5178C1.79688 16.8465 2.00256 17.14 2.31155 17.2522L9.75312 19.9536C9.93073 20.018 10.1227 20.0128 10.2863 19.9536L17.7278 17.2522C18.0368 17.14 18.2425 16.8465 18.2425 16.5178V7.80243C18.2425 7.26135 17.704 6.88309 17.1947 7.06802ZM10.0197 1.5625C11.0507 1.5625 11.8895 2.40265 11.8895 3.43521C11.8895 4.46777 11.0507 5.30792 10.0197 5.30792C8.98866 5.30792 8.14988 4.46777 8.14988 3.43521C8.14988 2.40265 8.98866 1.5625 10.0197 1.5625ZM9.23844 18.1044L3.35938 15.9703V8.91724L9.23844 11.0513V18.1044ZM10.0197 9.67255L6.90644 8.54248C7.58164 7.51892 8.75184 6.87042 10.0197 6.87042C11.2875 6.87042 12.4577 7.51892 13.1329 8.54248L10.0197 9.67255ZM16.68 15.9703L10.8009 18.1044V11.0513L16.68 8.91724V15.9703Z" fill="currentColor"/>-->
+<!--                                                    </svg>-->
+
+<!--                                                </div>-->
+<!--                                                <div class="font-size-sm">5 lessons</div>-->
+<!--                                            </div>-->
+<!--                                        </li>-->
+<!--                                    </ul>-->
+<!--                                </div>-->
+
+<!--                                <div class="col-auto px-2 text-right">-->
+<!--                                    <div class="star-rating mb-2 mb-lg-0">-->
+<!--                                        <div class="rating" style="width:100%;"></div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="col-md-6 col-lg-4 col-xl-3 pb-4 pb-md-5" style="padding-right:15px;padding-left:15px;">-->
+<!--                &lt;!&ndash; Card &ndash;&gt;-->
+<!--                <div class="card border shadow-dark-hover p-2 sk-fade">-->
+<!--                    &lt;!&ndash; Image &ndash;&gt;-->
+<!--                    <div class="card-zoom position-relative">-->
+<!--                        <a href="course-single-v5.html" class="card-img sk-thumbnail img-ratio-3 d-block">-->
+<!--                            <img class="rounded shadow-light-lg" src="assets/img/products/product-11.jpg" alt="...">-->
+<!--                        </a>-->
+
+<!--                        <span class="sk-fade-right badge-float bottom-0 right-0 mb-2 me-2">-->
+<!--                            <ins class="h5 mb-0 text-white">$415.99</ins>-->
+<!--                        </span>-->
+<!--                    </div>-->
+
+<!--                    &lt;!&ndash; Footer &ndash;&gt;-->
+<!--                    <div class="card-footer px-2 pb-2 mb-1 pt-4 position-relative">-->
+<!--                        &lt;!&ndash; Preheading &ndash;&gt;-->
+<!--                        <a href="course-single-v5.html"><span class="mb-1 d-inline-block text-gray-800">Development</span></a>-->
+
+<!--                        &lt;!&ndash; Heading &ndash;&gt;-->
+<!--                        <div class="position-relative">-->
+<!--                            <a href="course-single-v5.html" class="d-block stretched-link"><h5 class="line-clamp-2 h-md-48 h-lg-58 me-md-8 me-lg-10 me-xl-4 mb-2">The Complete JavaScript Course 2020: Real Projects!</h5></a>-->
+
+<!--                            <div class="row mx-n2 align-items-end">-->
+<!--                                <div class="col px-2">-->
+<!--                                    <ul class="nav mx-n3">-->
+<!--                                        <li class="nav-item px-3">-->
+<!--                                            <div class="d-flex align-items-center">-->
+<!--                                                <div class="me-2 d-flex icon-uxs text-secondary">-->
+<!--                                                    &lt;!&ndash; Icon &ndash;&gt;-->
+<!--                                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">-->
+<!--                                                        <path d="M17.1947 7.06802L14.6315 7.9985C14.2476 7.31186 13.712 6.71921 13.0544 6.25992C12.8525 6.11877 12.6421 5.99365 12.4252 5.88303C13.0586 5.25955 13.452 4.39255 13.452 3.43521C13.452 1.54098 11.9124 -1.90735e-06 10.0197 -1.90735e-06C8.12714 -1.90735e-06 6.58738 1.54098 6.58738 3.43521C6.58738 4.39255 6.98075 5.25955 7.61414 5.88303C7.39731 5.99365 7.1869 6.11877 6.98502 6.25992C6.32752 6.71921 5.79178 7.31186 5.40787 7.9985L2.8447 7.06802C2.33612 6.88339 1.79688 7.26044 1.79688 7.80243V16.5178C1.79688 16.8465 2.00256 17.14 2.31155 17.2522L9.75312 19.9536C9.93073 20.018 10.1227 20.0128 10.2863 19.9536L17.7278 17.2522C18.0368 17.14 18.2425 16.8465 18.2425 16.5178V7.80243C18.2425 7.26135 17.704 6.88309 17.1947 7.06802ZM10.0197 1.5625C11.0507 1.5625 11.8895 2.40265 11.8895 3.43521C11.8895 4.46777 11.0507 5.30792 10.0197 5.30792C8.98866 5.30792 8.14988 4.46777 8.14988 3.43521C8.14988 2.40265 8.98866 1.5625 10.0197 1.5625ZM9.23844 18.1044L3.35938 15.9703V8.91724L9.23844 11.0513V18.1044ZM10.0197 9.67255L6.90644 8.54248C7.58164 7.51892 8.75184 6.87042 10.0197 6.87042C11.2875 6.87042 12.4577 7.51892 13.1329 8.54248L10.0197 9.67255ZM16.68 15.9703L10.8009 18.1044V11.0513L16.68 8.91724V15.9703Z" fill="currentColor"/>-->
+<!--                                                    </svg>-->
+
+<!--                                                </div>-->
+<!--                                                <div class="font-size-sm">5 lessons</div>-->
+<!--                                            </div>-->
+<!--                                        </li>-->
+<!--                                    </ul>-->
+<!--                                </div>-->
+
+<!--                                <div class="col-auto px-2 text-right">-->
+<!--                                    <div class="star-rating mb-2 mb-lg-0">-->
+<!--                                        <div class="rating" style="width:100%;"></div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="col-md-6 col-lg-4 col-xl-3 pb-4 pb-md-5" style="padding-right:15px;padding-left:15px;">-->
+<!--                &lt;!&ndash; Card &ndash;&gt;-->
+<!--                <div class="card border shadow-dark-hover p-2 sk-fade">-->
+<!--                    &lt;!&ndash; Image &ndash;&gt;-->
+<!--                    <div class="card-zoom position-relative">-->
+<!--                        <a href="course-single-v5.html" class="card-img sk-thumbnail img-ratio-3 d-block">-->
+<!--                            <img class="rounded shadow-light-lg" src="assets/img/products/product-10.jpg" alt="...">-->
+<!--                        </a>-->
+
+<!--                        <span class="sk-fade-right badge-float bottom-0 right-0 mb-2 me-2">-->
+<!--                            <ins class="h5 mb-0 text-white">$415.99</ins>-->
+<!--                        </span>-->
+<!--                    </div>-->
+
+<!--                    &lt;!&ndash; Footer &ndash;&gt;-->
+<!--                    <div class="card-footer px-2 pb-2 mb-1 pt-4 position-relative">-->
+<!--                        &lt;!&ndash; Preheading &ndash;&gt;-->
+<!--                        <a href="course-single-v5.html"><span class="mb-1 d-inline-block text-gray-800">Marketing</span></a>-->
+
+<!--                        &lt;!&ndash; Heading &ndash;&gt;-->
+<!--                        <div class="position-relative">-->
+<!--                            <a href="course-single-v5.html" class="d-block stretched-link"><h5 class="line-clamp-2 h-md-48 h-lg-58 me-md-8 me-lg-10 me-xl-4 mb-2">Productivity and Time Management for workplace</h5></a>-->
+
+<!--                            <div class="row mx-n2 align-items-end">-->
+<!--                                <div class="col px-2">-->
+<!--                                    <ul class="nav mx-n3">-->
+<!--                                        <li class="nav-item px-3">-->
+<!--                                            <div class="d-flex align-items-center">-->
+<!--                                                <div class="me-2 d-flex icon-uxs text-secondary">-->
+<!--                                                    &lt;!&ndash; Icon &ndash;&gt;-->
+<!--                                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">-->
+<!--                                                        <path d="M17.1947 7.06802L14.6315 7.9985C14.2476 7.31186 13.712 6.71921 13.0544 6.25992C12.8525 6.11877 12.6421 5.99365 12.4252 5.88303C13.0586 5.25955 13.452 4.39255 13.452 3.43521C13.452 1.54098 11.9124 -1.90735e-06 10.0197 -1.90735e-06C8.12714 -1.90735e-06 6.58738 1.54098 6.58738 3.43521C6.58738 4.39255 6.98075 5.25955 7.61414 5.88303C7.39731 5.99365 7.1869 6.11877 6.98502 6.25992C6.32752 6.71921 5.79178 7.31186 5.40787 7.9985L2.8447 7.06802C2.33612 6.88339 1.79688 7.26044 1.79688 7.80243V16.5178C1.79688 16.8465 2.00256 17.14 2.31155 17.2522L9.75312 19.9536C9.93073 20.018 10.1227 20.0128 10.2863 19.9536L17.7278 17.2522C18.0368 17.14 18.2425 16.8465 18.2425 16.5178V7.80243C18.2425 7.26135 17.704 6.88309 17.1947 7.06802ZM10.0197 1.5625C11.0507 1.5625 11.8895 2.40265 11.8895 3.43521C11.8895 4.46777 11.0507 5.30792 10.0197 5.30792C8.98866 5.30792 8.14988 4.46777 8.14988 3.43521C8.14988 2.40265 8.98866 1.5625 10.0197 1.5625ZM9.23844 18.1044L3.35938 15.9703V8.91724L9.23844 11.0513V18.1044ZM10.0197 9.67255L6.90644 8.54248C7.58164 7.51892 8.75184 6.87042 10.0197 6.87042C11.2875 6.87042 12.4577 7.51892 13.1329 8.54248L10.0197 9.67255ZM16.68 15.9703L10.8009 18.1044V11.0513L16.68 8.91724V15.9703Z" fill="currentColor"/>-->
+<!--                                                    </svg>-->
+
+<!--                                                </div>-->
+<!--                                                <div class="font-size-sm">5 lessons</div>-->
+<!--                                            </div>-->
+<!--                                        </li>-->
+<!--                                    </ul>-->
+<!--                                </div>-->
+
+<!--                                <div class="col-auto px-2 text-right">-->
+<!--                                    <div class="star-rating mb-2 mb-lg-0">-->
+<!--                                        <div class="rating" style="width:100%;"></div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+
+
+
+{% endblock %}
